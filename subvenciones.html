@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Holamundo Matrix</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black; /* fondo negro */
+      color: white;
+      font-family: monospace;
+    }
+    #holamundo-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 19px;
+      z-index: 2;
+      color: white;
+      text-align: center;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="holamundo-container">
+    <div>Accediendo a los datos del usuario...</div>
+  </div>
+  <canvas id="matrix"></canvas>
+
+  <script>
+    // Código de la "Matrix" con números verdes
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const columns = Math.floor(canvas.width / 20);
+    const drops = Array(columns).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; 
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#00FF00'; 
+      ctx.font = '17px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = Math.random() > 0.5 ? '1' : '0';
+        ctx.fillText(text, i * 20, drops[i] * 20);
+        drops[i]++;
+        if (drops[i] * 20 > canvas.height || Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+      }
+    }
+
+    setInterval(draw, 50);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Mostrar nuevas líneas con temporizador
+    const container = document.getElementById('holamundo-container');
+
+    setTimeout(() => {
+      const line1 = document.createElement('div');
+      line1.textContent = "Copiando datos de WhatsApp...";
+      container.appendChild(line1);
+    }, 1500); // después de 1,5 segundos
+
+    setTimeout(() => {
+      const line2 = document.createElement('div');
+      line2.textContent = "Copiando datos de Galeria...";
+      container.appendChild(line2);
+    }, 3000); // después de 3 segundos
+
+    setTimeout(() => {
+      const line3 = document.createElement('div');
+      line3.textContent = "Copiando datos de Instagram...";
+      container.appendChild(line3);
+    }, 5000); // después de 5 segundos
+
+    // "Cerrar" página simulando vaciado del contenido
+    setTimeout(() => {
+      document.body.innerHTML = "<h1 style='color:white; text-align:center; margin-top:50vh;'>Finalizado</h1>";
+    }, 6000); // después de 6 segundos
+  </script>
+</body>
+</html>
